@@ -1,16 +1,54 @@
-# React + Vite
+# SILAH – Family Portal Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Project Overview
+SILAH is a web-based family portal designed to help families stay connected, organize events, manage family trees, and share important updates.
 
-Currently, two official plugins are available:
+This project is developed as part of **Milestone 4 – Front-End Prototype**, focusing on building a fully interactive UI using React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🎯 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🏠 Dashboard with overview of family activity
+- 👨‍👩‍👧‍👦 Family Tree (structure ready)
+- 📅 Events management (UI ready)
+- 📢 Announcements feed
+- 💬 Messages (UI ready)
+- 🖼 Gallery
+- 📄 Documents section
+- ⚙️ Settings panel
+- 🔔 Notifications dropdown
+- 👤 Profile page
+- 👥 Admin & Member role views
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Technologies Used
+
+- React (Vite)
+- JavaScript (ES6)
+- CSS (Custom styling)
+- React Router
+
+---
+
+
+## 👥 Team Contributions
+
+| Member | Role |
+|------|------|
+| Meshaal | Frontend layout, dashboard, UI structure |
+| Osama | Family Tree |
+| Rakan | Login/Signup & Authentication |
+| Ziyad | Messages / improve existed features |
+
+------------
+
+
+## 🚀 How to Run
+
+1. Clone the repository:
+2. Navigate to the project:
+3. Install dependencies:
+4. Run the project:
+

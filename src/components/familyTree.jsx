@@ -177,7 +177,7 @@ export default function FamilyTree() {
         nodesDraggable={false}
         nodesConnectable={false}
         onlyRenderVisibleElements={true}
-        minZoom={0.1}
+        minZoom={0.02}
         maxZoom={2}
       >
         <Background

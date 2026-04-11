@@ -1,6 +1,6 @@
 import FamilyTree from "../components/familyTree";
 
-export default function FamilyTreePage({ userRole }) {
+export default function FamilyTreePage({ userRole, theme }) {
   return (
     <div className="dashboard-page">
       <div className="dashboard-card">
@@ -17,7 +17,7 @@ export default function FamilyTreePage({ userRole }) {
       </div>
 
       <div className="tree-wrapper">
-        <FamilyTree />
+        <FamilyTree theme={theme} />
       </div>
     </div>
   );

@@ -60,11 +60,11 @@ const generationColors = [
 //     </div>
 //   );
 // }
-function ConditionalLabel({ name, color, hovered, depth }) {
+function ConditionalLabel({ name, color, hovered, depth, theme }) {
   const size = getNodeSize(depth);
   const fontSize = Math.max(size *0.22, 9);
   const paddingH = Math.max(size * 0.18, 5);
-
+  const isDark = theme === "dark";  
   return (
     <div dir="rtl"
       style={{
@@ -80,9 +80,9 @@ function ConditionalLabel({ name, color, hovered, depth }) {
         whiteSpace: "nowrap",
         overflow: "hidden",
         textOverflow: "ellipsis",
-        background: hovered ? color.glow + "33" : "#ffffff14",
-        color: hovered ? color.ring : "#ffffffcc",
-        border: `1px solid ${hovered ? color.ring + "66" : "#ffffff20"}`,
+        background: hovered ? color.glow + "33" : (isDark ? "#ffffff14" : "#00000008"),
+        color: hovered ? color.ring : (isDark ? "#ffffffcc" : "#374151"),
+        border: `1px solid ${hovered ? color.ring + "66" : (isDark ? "#ffffff20" : "#00000015")}`,
         transition: "all 0.2s ease",
         backdropFilter: "blur(4px)",
         WebkitBackdropFilter: "blur(4px)",
@@ -162,11 +162,19 @@ function PersonNode({ data }) {
 
 const nodeTypes = { personNode: PersonNode };
 
-export default function FamilyTree() {
+export default function FamilyTree({ theme }) {
   const layout = useMemo(() => buildTreeLayout(familyNodes, rootId), []);
 
+    
+
+  const isDark = theme === "dark";
+  const bg = isDark ? "#0f1117" : "#ffffff";
+  const dotColor = isDark ? "#ffffff18" : "#00000018";
+  const controlsBg = isDark ? "#1e2130" : "#ffffff";
+  const controlsBorder = isDark ? "#ffffff15" : "#e5e7eb";
+
   return (
-    <div style={{ width: "100%", height: "100%", background: "#fff" }}>
+    <div style={{ width: "100%", height: "100%", background: bg }}>
       <ReactFlow
         nodes={layout.nodes}
         edges={layout.edges}
@@ -177,19 +185,19 @@ export default function FamilyTree() {
         nodesDraggable={false}
         nodesConnectable={false}
         onlyRenderVisibleElements={true}
-        minZoom={0.02}
+        minZoom={0.1}
         maxZoom={2}
       >
         <Background
           variant="dots"
           gap={24}
           size={1}
-          color="#ffffff18"
+          color={dotColor}
         />
         <Controls
           style={{
-            background: "#1e2130",
-            border: "1px solid #ffffff15",
+            background: controlsBg,
+            border: `1px solid ${controlsBorder}`,
             borderRadius: 10,
           }}
         
@@ -201,8 +209,8 @@ export default function FamilyTree() {
           }}
           maskColor="#ffffff10"
           style={{
-            background: "#1e2130",
-            border: "1px solid #ffffff15",
+            background: controlsBg,
+            border: `1px solid ${controlsBorder}`,
             borderRadius: 10,
           }}
 

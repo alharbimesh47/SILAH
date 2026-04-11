@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+  import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Sidebar from "./components/layout/Sidebar";
@@ -45,7 +45,11 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState("member");
   const [currentUser, setCurrentUser] = useState(null);
-
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
   useEffect(() => {
     const savedSession = localStorage.getItem("silahCurrentUser");
 
@@ -89,7 +93,7 @@ export default function App() {
           path="*"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <div className="app-layout">
+              <div className={`app-layout ${theme}`}>
                 <Sidebar
                   userRole={userRole}
                   currentUser={currentUser}
@@ -115,7 +119,7 @@ export default function App() {
                       />
                       <Route
                         path="/family-tree"
-                        element={<FamilyTreePage userRole={userRole} />}
+                        element={<FamilyTreePage userRole={userRole} theme={theme} />}
                       />
                       <Route
                         path="/announcements"
@@ -131,7 +135,7 @@ export default function App() {
                       />
                       <Route
                         path="/settings"
-                        element={<Settings userRole={userRole} />}
+                        element={<Settings userRole={userRole} theme={theme} onThemeChange={handleThemeChange}/>}
                       />
                       <Route
                         path="/documents"

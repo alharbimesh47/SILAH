@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import ReactFlow, {
   Background,
   Controls,
@@ -8,10 +8,11 @@ import ReactFlow, {
   
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { familyNodes, rootId } from "../data/familytree";
+// import { familyNodes, rootId } from "../data/familytree";
 import { buildTreeLayout } from "../utils/treelayout";
 import FamilyEdge from "./familyEdge";
 import defaultProfile from "../assets/profilePicture.png";
+import { api } from "../utils/api";
 
 // add alongside nodeTypes
 const edgeTypes = {
@@ -32,34 +33,7 @@ const generationColors = [
   { ring: "#f472b6", glow: "#fce7f3", text: "#9d174d" },
 ];
 
-// function ConditionalLabel({ name, color, hovered }) {
-//   const zoom = useStore((s) => s.transform[2]);
-//   if (zoom < 0.45) return null;
 
-//   return (
-//     <div
-//       style={{
-//         marginTop: 6,
-//         maxWidth: 96,
-//         textAlign: "center",
-//         padding: "3px 8px",
-//         borderRadius: 20,
-//         fontSize: 10,
-//         fontWeight: 600,
-//         letterSpacing: "0.01em",
-//         whiteSpace: "nowrap",
-//         overflow: "hidden",
-//         textOverflow: "ellipsis",
-//         background: hovered ? color.glow : "var(--color-background-primary)",
-//         color: hovered ? color.text : "var(--color-text-secondary)",
-//         border: `1px solid ${hovered ? color.ring + "66" : "var(--color-border-tertiary)"}`,
-//         transition: "all 0.2s ease",
-//       }}
-//     >
-//       {name}
-//     </div>
-//   );
-// }
 function ConditionalLabel({ name, color, hovered, depth, theme }) {
   const size = getNodeSize(depth);
   const fontSize = Math.max(size *0.22, 9);
@@ -161,11 +135,44 @@ function PersonNode({ data }) {
 }
 
 const nodeTypes = { personNode: PersonNode };
+const ROOT_ID = "1";
+export default function FamilyTree({ theme,refreshKey  }) {
+  // const layout = useMemo(() => buildTreeLayout(familyNodes, rootId), []);
 
-export default function FamilyTree({ theme }) {
-  const layout = useMemo(() => buildTreeLayout(familyNodes, rootId), []);
+  const [familyNodes, setFamilyNodes] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Re-fetch whenever refreshKey changes
+  useEffect(() => {
+    setLoading(true);
+    api.get("/family")
+      .then(res => {
+        if (res.success) setFamilyNodes(res.data);
+      })
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false));
+  }, [refreshKey]);
+
+  const layout = useMemo(() => {
+    if (!familyNodes || Object.keys(familyNodes).length === 0) 
+      return { nodes: [], edges: [] };
     
+    // Find root (node with no parent)
+    const rootNode = Object.values(familyNodes).find(n => !n.parentId);
+    if (!rootNode) return { nodes: [], edges: [] };
+    
+    return buildTreeLayout(familyNodes, rootNode.id);
+  }, [familyNodes]);
+
+  if (loading) return <div style={{ padding: 40 }}>Loading family tree...</div>;
+
+  if (!familyNodes || Object.keys(familyNodes).length === 0) {
+    return (
+      <div style={{ padding: 40, textAlign: "center", color: "#888" }}>
+        No members in the tree yet. Ask an admin to add members.
+      </div>
+    );
+  }  
 
   const isDark = theme === "dark";
   const bg = isDark ? "#0f1117" : "#ffffff";

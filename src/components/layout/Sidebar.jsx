@@ -7,18 +7,19 @@ export default function Sidebar({ userRole, currentUser, onLogout }) {
   const [openSettings, setOpenSettings] = useState(false);
 
   const navItems = [
-    { to: "/", label: "Dashboard", icon: "◫" },
-    { to: "/admin-dashboard", label: "Admin Dashboard", icon: "◧", adminOnly: true },
-    { to: "/members", label: "Members", icon: "👥", adminOnly: true },
-    { to: "/events", label: "Events", icon: "🗓" },
-    { to: "/family-tree", label: "Family Tree", icon: "⌁" },
-    { to: "/gallery", label: "Gallery", icon: "🖼" },
-    { to: "/documents", label: "Documents", icon: "📄" },
-    { to: "/announcements", label: "Announcements", icon: "📣" },
-    { to: "/messages", label: "Messages", icon: "💬" },
-    { to: "/analytics", label: "Analytics", icon: "📊", adminOnly: true },
-    { to: "/profile", label: "Profile", icon: "👤" },
-  ];
+  { to: "/", label: "Dashboard", icon: "◫" },
+  { to: "/admin-dashboard", label: "Admin Dashboard", icon: "◧", adminOnly: true },
+  { to: "/members", label: "Members", icon: "👥", adminOnly: true },
+  { to: "/approvals", label: "Approvals", icon: "✅", adminOnly: true }, // 👈 add this
+  { to: "/events", label: "Events", icon: "🗓" },
+  { to: "/family-tree", label: "Family Tree", icon: "⌁" },
+  { to: "/gallery", label: "Gallery", icon: "🖼" },
+  { to: "/documents", label: "Documents", icon: "📄" },
+  { to: "/announcements", label: "Announcements", icon: "📣" },
+  { to: "/messages", label: "Messages", icon: "💬" },
+  { to: "/analytics", label: "Analytics", icon: "📊", adminOnly: true },
+  { to: "/profile", label: "Profile", icon: "👤" },
+];
 
   const visibleItems = navItems.filter(
     (item) => !item.adminOnly || userRole === "admin"

@@ -18,6 +18,7 @@ import Members from "./pages/Members";
 import Analytics from "./pages/Analytics";
 import AdminDashboard from "./pages/AdminDashboard";
 import Auth from "./pages/Auth";
+import AdminApprovals from "./pages/AdminApprovals";
 
 import "./App.css";
 
@@ -73,6 +74,12 @@ export default function App() {
     setCurrentUser(null);
     setUserRole("member");
     setIsAuthenticated(false);
+  }
+
+  function handleProfileUpdate(updatedUser) {
+  setCurrentUser(updatedUser);
+  setUserRole(updatedUser.role);
+  localStorage.setItem("silahCurrentUser", JSON.stringify(updatedUser));
   }
 
   return (
@@ -131,7 +138,13 @@ export default function App() {
                       />
                       <Route
                         path="/profile"
-                         element={<Profile userRole={userRole} currentUser={currentUser} />}
+                        element={
+                          <Profile
+                            userRole={userRole}
+                            currentUser={currentUser}
+                            onProfileUpdate={handleProfileUpdate}  
+                          />
+                        }
                       />
                       <Route
                         path="/settings"
@@ -167,6 +180,17 @@ export default function App() {
                           </AdminRoute>
                         }
                       />
+                      <Route
+                          path="/approvals"
+                          element={
+                            <AdminRoute
+                              isAuthenticated={isAuthenticated}
+                              userRole={userRole}
+                            >
+                              <AdminApprovals />
+                            </AdminRoute>
+                          }
+                        />
                       <Route
                         path="/admin-dashboard"
                         element={

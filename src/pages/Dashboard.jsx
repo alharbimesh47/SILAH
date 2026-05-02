@@ -1,31 +1,20 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../utils/api";
 
 export default function Dashboard({ userRole }) {
   const navigate = useNavigate();
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const events = [
-    {
-      title: "Family Reunion",
-      date: "March 15, 2026",
-      time: "6:00 PM",
-      location: "Riyadh Grand Hall",
-      status: "Attending",
-    },
-    {
-      title: "Grandmother's Birthday",
-      date: "March 22, 2026",
-      time: "4:00 PM",
-      location: "Family Home",
-      status: "Maybe",
-    },
-    {
-      title: "Weekend Gathering",
-      date: "April 5, 2026",
-      time: "3:00 PM",
-      location: "Al-Nakheel Park",
-      status: "No Response",
-    },
-  ];
+  useEffect(() => {
+    api.get("/events")
+      .then(res => {
+        if (res.success) setEvents(res.data.slice(0, 3));
+      })
+      .catch(err => console.error("Failed to load events:", err))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="dashboard-page">
@@ -41,8 +30,12 @@ export default function Dashboard({ userRole }) {
             </button>
           </div>
 
-          {events.map((event, index) => (
-            <div key={index} className="event-card">
+          {loading && <p>Loading events...</p>}
+
+          {!loading && events.length === 0 && <p>No upcoming events.</p>}
+
+          {events.map((event) => (
+            <div key={event._id} className="event-card">
               <div className="event-top">
                 <h4 className="event-title">{event.title}</h4>
                 <span

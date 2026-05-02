@@ -72,4 +72,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+router.put("/:id", async (req, res) => {
+  try {
+    const event = await Event.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status }, // make sure we're explicitly updating status
+      { new: true }
+    );
+
+    if (!event) return res.status(404).json({ success: false, message: "Event not found" });
+
+    res.status(200).json({ success: true, data: event });
+  } catch (error) {
+    res.status(400).json({ success: false, message: "Failed to update", error: error.message });
+  }
+});
+
 module.exports = router;

@@ -5,14 +5,15 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const testRoutes = require("./routes/testRoutes");
 const eventRoutes = require("./routes/eventRoutes");
-
+const authRoutes = require("./routes/authRoutes");
+const familyRoutes = require("./routes/familyRoutes");
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
-
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 connectDB();
 
 app.get("/", (req, res) => {
@@ -23,6 +24,9 @@ app.get("/", (req, res) => {
 
 app.use("/api/test", testRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/family", familyRoutes);
+
 
 const PORT = process.env.PORT || 5050;
 

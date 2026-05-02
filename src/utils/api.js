@@ -14,7 +14,7 @@
 //   }).then(res => res.json()),
 // };
 
-const BASE_URL = "http://localhost:5050/api";
+const BASE_URL = "https://silah-o7po.onrender.com/api";
 
 async function fetchWithTimeout(url, options = {}, timeout = 5000) {
   const controller = new AbortController();

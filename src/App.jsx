@@ -154,10 +154,7 @@ export default function App() {
                         path="/documents"
                         element={<Documents userRole={userRole} />}
                       />
-                      <Route
-                        path="/gallery"
-                        element={<Gallery userRole={userRole} />}
-                      />
+                      <Route path="/gallery" element={<Gallery userRole={userRole} currentUser={currentUser} />} />
                       <Route
                         path="/members"
                         element={

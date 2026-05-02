@@ -7,6 +7,7 @@ const testRoutes = require("./routes/testRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const authRoutes = require("./routes/authRoutes");
 const familyRoutes = require("./routes/familyRoutes");
+const galleryRoutes = require("./routes/galleryRoutes");
 dotenv.config();
 
 const app = express();
@@ -26,6 +27,8 @@ app.use("/api/test", testRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/family", familyRoutes);
+app.use("/api/gallery", galleryRoutes);
+
 
 
 const PORT = process.env.PORT || 5050;

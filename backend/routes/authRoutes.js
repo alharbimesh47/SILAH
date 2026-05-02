@@ -85,7 +85,7 @@ router.put("/profile/:id", async (req, res) => {
 
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    // Sync with family tree node
+    // Synce with family tree node 
     const FamilyMember = require("../models/FamilyMember");
     const familyMember = await FamilyMember.findOne({ userId: user._id });
     console.log("Family member found:", familyMember);

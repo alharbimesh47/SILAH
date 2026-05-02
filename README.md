@@ -3,7 +3,7 @@
 ## 📌 Project Overview
 SILAH is a web-based family portal designed to help families stay connected, organize events, manage family trees, and share important updates.
 
-This project is developed as part of **Milestone 4 – Front-End Prototype**, focusing on building a fully interactive UI using React.
+This project is developed as part of **Milestone 5 – back end Prototype**, focusing on building a fully interactive UI using React.
 
 ---
 

@@ -29,7 +29,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Establish connection to MongoDB
-// connectDB();
+connectDB();
 
 // --- API Routes ---
 
@@ -53,22 +53,22 @@ app.use("/api/gallery", galleryRoutes);  // Handles Photo uploads and retrieval
 // --- Server Startup ---
 
 // Define the port from environment variables or default to 5050
-// const PORT = process.env.PORT || 5050;
-
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
-
 const PORT = process.env.PORT || 5050;
-const startServer = async () => {
-  try {
-    await connectDB(); // Ensure DB connection before starting server
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (err) {
-    console.error("Failed to connect to the database. Server not started.", err);
-    process.exit(1); // Exit with failure code
-  }
-};
-startServer();
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// const PORT = process.env.PORT || 5050;
+// const startServer = async () => {
+//   try {
+//     await connectDB(); // Ensure DB connection before starting server
+//     app.listen(PORT, () => {
+//       console.log(`Server running on port ${PORT}`);
+//     });
+//   } catch (err) {
+//     console.error("Failed to connect to the database. Server not started.", err);
+//     process.exit(1); // Exit with failure code
+//   }
+// };
+// startServer();
